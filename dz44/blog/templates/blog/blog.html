@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Блог</title>
+    <style>
+        body { background: #e0dcfa; font-family: sans-serif; }
+        h1 { text-align: center; margin-top: 40px }
+        .header { padding: 20px; background: #f8f6e5; }
+        .menu { float: right; }
+        .menu a { margin-left: 30px; color: #41224e; font-weight: bold; text-decoration: none; }
+        .block { margin: 20px auto; max-width: 900px; }
+        .counter { background: #fff8cc; padding: 15px; font-size: 1.3em; }
+        .post { margin: 25px 0; border-radius: 7px; border: 3px solid #ac94d8; }
+        .post-title { background: #6c4186; color: #fff; padding: 18px; font-size: 1.2em; font-weight: bold; border-radius: 7px 7px 0 0; }
+        .post-body { background: #f8f6e5; padding: 20px; border-radius: 0 0 5px 5px; }
+        .post-date { font-size: 0.9em; margin-bottom: 7px; color: #111; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span style="font-size:2em;color:#6c4186;font-weight:bold">portfolio</span>
+        <span class="menu">
+            <a href="/">Главная</a>
+            <a href="/blog/">Блог</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a> | <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+
+        </span>
+    </div>
+    <h1>Блог</h1>
+    <div class="block">
+        <div class="counter"><b>Постов: {{ posts_count }}</b></div>
+        {% for post in posts %}
+            <div class="post">
+                <div class="post-title">{{ post.title }}</div>
+                <div class="post-body">
+                    <div class="post-date">{{ post.date|date:'d.m.Y' }}</div>
+                    {{ post.text }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
